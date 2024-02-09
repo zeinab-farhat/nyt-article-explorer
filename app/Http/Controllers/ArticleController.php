@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Request;
 use Illuminate\View\View;
 
 class ArticleController extends Controller
 {
 
-    public function index(): View
+
+    public function index()
     {
         $perPage = 10; // Number of articles per page
+
         // Check if cached data exists
         $articles = Cache::remember('nytimes_articles', 60, function () {
             // Fetch articles from the NY Times API
@@ -22,13 +26,34 @@ class ArticleController extends Controller
             return $response->json()['results'];
         });
 
-//        // Paginate the articles
-//        $currentPage = request()->query('page', 1);
-//        $items = collect($articles);
-//        $paginatedArticles = new LengthAwarePaginator($items->forPage($currentPage, $perPage), count($items), $perPage, $currentPage);
+        // Filter articles based on search parameters
+        $filteredArticles = $this->filterArticles($articles);
 
-        return view('pages.articles', ['articles' => $articles]);
+        return view('pages.articles.index', ['articles' => $filteredArticles]);
     }
+
+    private function filterArticles($articles)
+    {
+        $title = Request::input('title');
+        $url = Request::input('url');
+
+        if ($title) {
+            $articles = array_filter($articles, function ($article) use ($title) {
+                return strpos($article['title'], $title) !== false;
+            });
+        }
+
+        if ($url) {
+            $articles = array_filter($articles, function ($article) use ($url) {
+                return strpos($article['url'], $url) !== false;
+            });
+        }
+
+        return $articles;
+    }
+
+
+
 
 
     public function getArticleById($articleId)
