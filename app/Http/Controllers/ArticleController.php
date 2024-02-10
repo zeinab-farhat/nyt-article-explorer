@@ -6,36 +6,21 @@ namespace App\Http\Controllers;
 use App\Console\Commands\UpdateNyTimesArticlesCommand;
 use App\Models\Article;
 use App\Models\UserArticle;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Request; // Import the Request class
-use Illuminate\View\View;
-use Illuminate\Support\Facades\Redis;
+
+// Import the Request class
+
 class ArticleController extends Controller
 {
 
-
-    public function index(Request $request)
+    public function index(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
     {
-//        $perPage = 10; // Number of articles per page
-//
-//        // Check if cached data exists
-//        $articles = Cache::remember('nytimes_articles', 60, function () {
-//            // Fetch articles from the NY Times API
-//            $response = Http::get('https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json', [
-//                'api-key' => 'e2o1Nf5YamMD78tZP8vG3TvbUKQ6jF9j',
-//            ]);
-//
-//            return $response->json()['results'];
-//        });
-//
-//        // Filter articles based on search parameters
-//        $filteredArticles = $this->filterArticles($articles);
-//
-//        return view('pages.articles.index', ['articles' => $filteredArticles]);
-
         // Define the cache key
         $cacheKey = 'nytimes_articles';
 
@@ -77,33 +62,12 @@ class ArticleController extends Controller
         return view('pages.articles.index', compact('articles'));
     }
 
-    private function filterArticles($articles)
-    {
-        $title = Request::input('title');
-        $url = Request::input('url');
-
-        if ($title) {
-            $articles = array_filter($articles, function ($article) use ($title) {
-                return strpos($article['title'], $title) !== false;
-            });
-        }
-
-        if ($url) {
-            $articles = array_filter($articles, function ($article) use ($url) {
-                return strpos($article['url'], $url) !== false;
-            });
-        }
-
-        return $articles;
-    }
-
     private function fetchAndCacheArticles()
     {
         // Instantiate the script and call its handle method to fetch data from API and update cache
         $script = new UpdateNyTimesArticlesCommand();
         $script->handle();
     }
-
 
 
     public function getArticleById($articleId)
@@ -116,9 +80,7 @@ class ArticleController extends Controller
         return $article;
     }
 
-
-    // Example function where you want to retrieve the article
-    public function show($id)
+    public function show($id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
     {
         $article = $this->getArticleById($id);
 
@@ -135,7 +97,7 @@ class ArticleController extends Controller
     {
         $user = auth()->user();
         $articleId = $request->id;
-// Get the saved article IDs
+        // Get the saved article IDs
         $savedArticleIds = $user->saved_articles;
 
         // Check if the article ID is already saved

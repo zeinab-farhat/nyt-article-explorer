@@ -1,4 +1,3 @@
-
 @extends('layouts.app', ['page' => __('Articles'), 'pageSlug' => 'articles'])
 
 @section('content')
@@ -16,10 +15,12 @@
                                     <form action="{{ route('pages.articles') }}" method="GET">
                                         <div class="input-group">
                                             <div class="col">
-                                                <input type="text" name="title" class="form-control" placeholder="Search by Title" value="{{ request('title') }}">
+                                                <input type="text" name="title" class="form-control"
+                                                       placeholder="Search by Title" value="{{ request('title') }}">
                                             </div>
                                             <div class="col">
-                                                <input type="text" name="url" class="form-control" placeholder="Search by URL" value="{{ request('url') }}">
+                                                <input type="text" name="url" class="form-control"
+                                                       placeholder="Search by URL" value="{{ request('url') }}">
                                             </div>
                                             <div class="input-group-append">
                                                 <button type="submit" class="btn btn-primary">Search</button>
@@ -51,7 +52,8 @@
                                                     <i class=" tim-icons icon-alert-circle-exc p-1"></i>
                                                 </a>
 
-                                                <form action="{{ route('save-article', ['id' => $article['id']]) }}" method="POST">
+                                                <form action="{{ route('save-article', ['id' => $article['id']]) }}"
+                                                      method="POST">
                                                     @csrf
                                                     <button type="submit">
                                                         <i class="tim-icons icon-heart-2 p-1"></i>
