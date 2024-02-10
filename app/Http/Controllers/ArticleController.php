@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Console\Commands\UpdateNyTimesArticlesCommand;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -32,14 +33,20 @@ class ArticleController extends Controller
 //
 //        return view('pages.articles.index', ['articles' => $filteredArticles]);
 
-        // Fetch articles from the NY Times API
-        $response = Http::get('https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json', [
-            'api-key' => 'e2o1Nf5YamMD78tZP8vG3TvbUKQ6jF9j',
-        ]);
+        // Define the cache key
+        $cacheKey = 'nytimes_articles';
 
-        // Extract the results from the response
-        $articles = collect($response->json()['results']);
-
+        // Check if the data exists in the cache
+        if (Cache::has($cacheKey)) {
+            // Retrieve data from cache
+            $articles = Cache::get($cacheKey);
+        } else {
+            // Data is not cached, fetch it from the API using the script
+            $this->fetchAndCacheArticles();
+            // Retrieve the articles from cache
+            $articles = Cache::get($cacheKey);
+        }
+        $articles = collect($articles);
         // Filter articles based on search parameters
         $title = $request->input('title');
         $url = $request->input('url');
@@ -57,7 +64,7 @@ class ArticleController extends Controller
 
         // Paginate the filtered articles
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $perPage = 10; // Adjust as needed
+        $perPage = 5; // Adjust as needed
         $currentPageItems = $articles->slice(($currentPage - 1) * $perPage, $perPage)->all();
         $articles = new LengthAwarePaginator($currentPageItems, $articles->count(), $perPage);
 
@@ -87,7 +94,12 @@ class ArticleController extends Controller
         return $articles;
     }
 
-
+    private function fetchAndCacheArticles()
+    {
+        // Instantiate the script and call its handle method to fetch data from API and update cache
+        $script = new UpdateNyTimesArticlesCommand();
+        $script->handle();
+    }
 
 
 
