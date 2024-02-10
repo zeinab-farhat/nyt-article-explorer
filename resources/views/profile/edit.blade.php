@@ -25,7 +25,9 @@
                                 <input type="email" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email address') }}" value="{{ old('email', auth()->user()->email) }}">
                                 @include('alerts.feedback', ['field' => 'email'])
                             </div>
-                    </div>
+
+                        </div>
+
                     <div class="card-footer">
                         <button type="submit" class="btn btn-fill btn-primary">{{ __('Save') }}</button>
                     </div>
@@ -63,6 +65,28 @@
                         <button type="submit" class="btn btn-fill btn-primary">{{ __('Change password') }}</button>
                     </div>
                 </form>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">{{ __('Saved Articles') }}</h5>
+                </div>
+
+                @if(auth()->user()->saved_articles)
+
+                @foreach (auth()->user()->saved_articles as $articleId)
+                    @php
+
+                        $articles = cache('nytimes_articles');
+                        $article = collect($articles)->firstWhere('id', $articleId);
+                    @endphp
+                    @if ($article)
+                        <div>{{ $article['title'] }}</div>
+                        <!-- Display other article details as needed -->
+                    @endif
+                @endforeach
+                @else
+                {{'no'}}
+@endif
             </div>
         </div>
         <div class="col-md-4">
@@ -102,5 +126,7 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 @endsection

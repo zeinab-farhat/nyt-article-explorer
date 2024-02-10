@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 
 use App\Console\Commands\UpdateNyTimesArticlesCommand;
+use App\Models\Article;
+use App\Models\UserArticle;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -126,5 +129,25 @@ class ArticleController extends Controller
             echo "Article not found.";
         }
         return view('pages.articles.show', ['article' => $article]);
+    }
+
+    public function saveArticle(Request $request, Article $article): RedirectResponse
+    {
+        $user = auth()->user();
+        $articleId = $request->id;
+// Get the saved article IDs
+        $savedArticleIds = $user->saved_articles;
+
+        // Check if the article ID is already saved
+        if (!$savedArticleIds || !in_array($articleId, $savedArticleIds)) {
+            // Append the article ID to the saved_articles array
+            $savedArticleIds[] = $articleId;
+
+            // Update the saved_articles attribute
+            $user->saved_articles = $savedArticleIds;
+            $user->save();
+        }
+
+        return redirect()->back()->with('success', 'Article saved successfully!');
     }
 }

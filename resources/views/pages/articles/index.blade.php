@@ -48,8 +48,15 @@
                                             <td>{{ $article["published_date"] }}</td>
                                             <td>
                                                 <a href="{{ route('article.view', ['id' => $article["id"]]) }}">
-                                                    <i class=" tim-icons icon-alert-circle-exc"></i>
+                                                    <i class=" tim-icons icon-alert-circle-exc p-1"></i>
                                                 </a>
+
+                                                <form action="{{ route('save-article', ['id' => $article['id']]) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit">
+                                                        <i class="tim-icons icon-heart-2 p-1"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
 
