@@ -1,4 +1,3 @@
-@extends('layouts.app', ['page' => __('Articles'), 'pageSlug' => 'articles'])
 
 @extends('layouts.app', ['page' => __('Articles'), 'pageSlug' => 'articles'])
 
@@ -53,12 +52,19 @@
                                                 </a>
                                             </td>
                                         </tr>
+
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-6">
+
+                                            </div>
+                                        </div>
                                     @endforeach
                                     </tbody>
 
                                 </table>
-                                {{--                            {{ $articles->setPath('/articles')->links() }} <!-- Render pagination links with custom base path -->--}}
-
+                                <div class="pagination justify-content-center">
+                                    {{ $articles->setPath('/articles')->links('vendor.pagination.bootstrap-4') }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -67,4 +73,3 @@
         </div>
     </div>
 @endsection
-

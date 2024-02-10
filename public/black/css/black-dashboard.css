@@ -17895,4 +17895,12 @@ Copyright (c) 2015 Daniel Eden
   line-height: 32px;
 }
 
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination .page-item .page-link {
+    color: #fff4f2; /* Set the color of inactive page numbers */
+}
 /*# sourceMappingURL=dashboard-free.css.map */

@@ -3,33 +3,68 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request; // Import the Request class
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Redis;
 class ArticleController extends Controller
 {
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $perPage = 10; // Number of articles per page
+//        $perPage = 10; // Number of articles per page
+//
+//        // Check if cached data exists
+//        $articles = Cache::remember('nytimes_articles', 60, function () {
+//            // Fetch articles from the NY Times API
+//            $response = Http::get('https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json', [
+//                'api-key' => 'e2o1Nf5YamMD78tZP8vG3TvbUKQ6jF9j',
+//            ]);
+//
+//            return $response->json()['results'];
+//        });
+//
+//        // Filter articles based on search parameters
+//        $filteredArticles = $this->filterArticles($articles);
+//
+//        return view('pages.articles.index', ['articles' => $filteredArticles]);
 
-        // Check if cached data exists
-        $articles = Cache::remember('nytimes_articles', 60, function () {
-            // Fetch articles from the NY Times API
-            $response = Http::get('https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json', [
-                'api-key' => 'e2o1Nf5YamMD78tZP8vG3TvbUKQ6jF9j',
-            ]);
+        // Fetch articles from the NY Times API
+        $response = Http::get('https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json', [
+            'api-key' => 'e2o1Nf5YamMD78tZP8vG3TvbUKQ6jF9j',
+        ]);
 
-            return $response->json()['results'];
-        });
+        // Extract the results from the response
+        $articles = collect($response->json()['results']);
 
         // Filter articles based on search parameters
-        $filteredArticles = $this->filterArticles($articles);
+        $title = $request->input('title');
+        $url = $request->input('url');
 
-        return view('pages.articles.index', ['articles' => $filteredArticles]);
+        if ($title) {
+            $articles = $articles->filter(function ($article) use ($title) {
+                return strpos($article['title'], $title) !== false;
+            });
+        }
+        if ($url) {
+            $articles = $articles->filter(function ($article) use ($url) {
+                return strpos($article['url'], $url) !== false;
+            });
+        }
+
+        // Paginate the filtered articles
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $perPage = 10; // Adjust as needed
+        $currentPageItems = $articles->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $articles = new LengthAwarePaginator($currentPageItems, $articles->count(), $perPage);
+
+        // Add query parameters to pagination links
+        $articles->appends($request->except('page'));
+
+        return view('pages.articles.index', compact('articles'));
     }
 
     private function filterArticles($articles)
