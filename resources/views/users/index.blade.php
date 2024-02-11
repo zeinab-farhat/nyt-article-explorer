@@ -12,9 +12,6 @@
                                 <div class="col-6">
                                     <h4 class="card-title">Users</h4>
                                 </div>
-                                <div class="col-6 text-right">
-                                    <a href="#" class="btn btn-primary">Add User</a>
-                                </div>
                             </div>
                         </div>
                         <div class="card-body">

@@ -42,6 +42,14 @@ class ArticleController extends Controller
         // Filter articles based on search parameters
         $title = $request->input('title');
         $url = $request->input('url');
+        $search = $request->input('search');
+
+        if ($search) {
+            $articles = $articles->filter(function ($article) use ($search) {
+                return stripos($article['title'], $search) !== false ||
+                    stripos($article['url'], $search) !== false;
+            });
+        }
 
         if ($title) {
             $title = strtolower($title); // Convert search query to lowercase
@@ -90,7 +98,7 @@ class ArticleController extends Controller
         $article = $this->getArticleById($id);
 
         if ($article) {
-            return view('pages.articles.show', ['article' => $article]);
+            return view('articles.show', ['article' => $article]);
         } else {
             return Redirect::back()->withErrors(['error' => 'Article not found']);
         }
