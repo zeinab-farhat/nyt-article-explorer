@@ -8,13 +8,16 @@
                     <div class="card article-card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">{{ $article['title'] }}</h4>
+
                             @if (!empty($article['published_date']))
                                 <p class="card-category">Published Date: {{ $article['published_date'] }}</p>
                             @endif
+
                         </div>
                         <div class="card-body">
                             <div class="article-section">
                                 <h5 class="article-section-title">General Information</h5>
+
                                 @if (!empty($article['section']))
                                     <p class="article-info"><span
                                             class="info-label">Section:</span> {{ $article['section'] }}</p>
@@ -93,6 +96,10 @@
                                     @endforeach
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="card-footer d-flex justify-content-center">
+                            <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">Back</a>
                         </div>
                     </div>
                 </div>

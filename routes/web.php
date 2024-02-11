@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-
-
-
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -29,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/articles', 'App\Http\Controllers\ArticleController@index')->name('articles');
     Route::get('/articles/{id}', 'App\Http\Controllers\ArticleController@show')->name('article.view');
     Route::post('/save-article', 'App\Http\Controllers\ArticleController@saveArticle')->name('save-article');
+    Route::delete('/remove-article/{articleTitle}', 'App\Http\Controllers\ArticleController@removeSavedArticle')->name('remove-article');
 
 });
 

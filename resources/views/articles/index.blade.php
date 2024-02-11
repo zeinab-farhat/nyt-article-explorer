@@ -22,26 +22,27 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-2">
                                     <h4 class="card-title">Articles</h4>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-md-10">
                                     <form action="{{ route('articles') }}" method="GET">
-                                        <div class="input-group">
-                                            <div class="col">
-                                                <input type="text" name="title" class="form-control"
-                                                       placeholder="Search by Title" value="{{ request('title') }}">
+                                        <div class="row">
+                                            <div class="col-sm-4 mb-2">
+                                                <input type="text" name="title" class="form-control" placeholder="Search by Title" value="{{ request('title') }}">
                                             </div>
-                                            <div class="col">
-                                                <input type="text" name="url" class="form-control"
-                                                       placeholder="Search by URL" value="{{ request('url') }}">
+                                            <div class="col-sm-4 mb-2">
+                                                <input type="text" name="url" class="form-control" placeholder="Search by URL" value="{{ request('url') }}">
                                             </div>
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-primary">Search</button>
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-primary btn-block">Search</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
+
+
+
                             </div>
                         </div>
                         <div class="card-body">
@@ -49,7 +50,7 @@
                                 <table class="table text-center">
                                     <thead>
                                     <th class="text-primary">Title</th>
-                                    <th class="text-primary">Abstract</th>
+                                    <th class="text-primary">URL</th>
                                     <th class="text-primary">Section</th>
                                     <th class="text-primary">Published Date</th>
                                     <th class="text-primary">Actions</th>
@@ -58,7 +59,7 @@
                                     @foreach($articles as $article)
                                         <tr>
                                             <td>{{ $article["title"] }}</td>
-                                            <td>{{ $article["abstract"] }}</td>
+                                            <td>{{ $article["url"] }}</td>
                                             <td>{{ $article["section"] }}</td>
                                             <td>{{ $article["published_date"] }}</td>
                                             <td>

@@ -2,11 +2,12 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="card">
                 <div class="card-header">
                     <h5 class="title">{{ __('Edit Profile') }}</h5>
                 </div>
+
                 <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
                     <div class="card-body">
                         @csrf
@@ -34,7 +35,6 @@
                                 @include('alerts.feedback', ['field' => 'email'])
                             </div>
                         @endif
-
                     </div>
 
                     <div class="card-footer">
@@ -43,11 +43,11 @@
                 </form>
             </div>
 
-            <!-- Password Section -->
             <div class="card">
                 <div class="card-header">
                     <h5 class="title">{{ __('Password') }}</h5>
                 </div>
+
                 <form method="post" action="{{ route('profile.password') }}" autocomplete="off">
                     <div class="card-body">
                         @csrf
@@ -70,32 +70,40 @@
                                    placeholder="{{ __('New Password') }}" value="" required>
                             @include('alerts.feedback', ['field' => 'password'])
                         </div>
+
                         <div class="form-group">
                             <label>{{ __('Confirm New Password') }}</label>
                             <input type="password" name="password_confirmation" class="form-control"
                                    placeholder="{{ __('Confirm New Password') }}" value="" required>
                         </div>
                     </div>
+
                     <div class="card-footer">
                         <button type="submit" class="btn btn-fill btn-primary">{{ __('Change password') }}</button>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="col-md-4">
-            <!-- Saved Articles Section -->
+
+        <div class="col-md-5">
             <div class="card card-user">
                 <div class="card-body">
                     <p class="card-text">
-
                     <h5 class="title">{{ __('Saved Articles') }}</h5>
+
                     @if ($savedArticles = auth()->user()->saved_articles)
                         <div class="card-description">
                             @foreach (auth()->user()->saved_articles as $articleTitle)
                                 <div class="article-item">
-                                    - {{ $articleTitle }} <br>
+                                    - <span>{{ $articleTitle }}</span>
+                                    <form action="{{ route('remove-article', ['articleTitle' => $articleTitle]) }}"
+                                          method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm bg-none"><i
+                                                class="fas fa-times text-danger"></i></button>
+                                    </form>
                                 </div>
-
                             @endforeach
                         </div>
                     @else
@@ -104,6 +112,5 @@
                         </div>
                     @endif
                 </div>
-
             </div>
 @endsection
