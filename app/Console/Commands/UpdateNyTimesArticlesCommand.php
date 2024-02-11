@@ -37,14 +37,9 @@ class UpdateNyTimesArticlesCommand extends Command
             'api-key' => 'e2o1Nf5YamMD78tZP8vG3TvbUKQ6jF9j',
         ]);
 
-
-            $articles = $response->json()['results'];
-
-
-        // Extract articles from the response
+        $articles = $response->json()['results'];
 
         // Store data in cache
         Cache::forever('nytimes_articles', $articles);
-
     }
 }

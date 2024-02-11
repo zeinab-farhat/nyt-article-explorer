@@ -1,5 +1,5 @@
 @if (session($key ?? 'status'))
-    <div class="alert alert-info alert-with-icon" data-notify="container" id="autoCloseAlert">
+    <div class="alert alert-success alert-with-icon" data-notify="container" id="autoCloseAlert">
         <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
             <i class="tim-icons icon-simple-remove"></i>
         </button>
