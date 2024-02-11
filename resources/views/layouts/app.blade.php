@@ -17,8 +17,8 @@
         <!-- Icons -->
         <link href="{{ asset('black') }}/css/nucleo-icons.css" rel="stylesheet" />
         <!-- CSS -->
-        <link href="{{ asset('black') }}/css/black-dashboard.css?v=2.0.0" rel="stylesheet" />
-        <link href="{{ asset('black') }}/css/theme.css" rel="stylesheet" />
+        <link href="{{ asset('black') }}/css/black-dashboard.css?v=3.0.0" rel="stylesheet" />
+        <link href="{{ asset('black') }}/css/theme.css?v=3.0.0" rel="stylesheet" />
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()

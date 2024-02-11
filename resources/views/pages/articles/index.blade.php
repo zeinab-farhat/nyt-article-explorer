@@ -55,7 +55,7 @@
                                                 <form action="{{ route('save-article', ['id' => $article['id']]) }}"
                                                       method="POST">
                                                     @csrf
-                                                    <button type="submit">
+                                                    <button type="submit" class="heart-button">
                                                         <i class="tim-icons icon-heart-2 p-1"></i>
                                                     </button>
                                                 </form>

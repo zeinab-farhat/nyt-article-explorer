@@ -125,3 +125,13 @@
     }
 }
 
+.heart-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.heart-button i{
+    color: #ba54f5;
+}
