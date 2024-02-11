@@ -84,22 +84,26 @@
         </div>
         <div class="col-md-4">
             <!-- Saved Articles Section -->
+            <div class="card card-user">
+                <div class="card-body">
+                    <p class="card-text">
 
-                <div class="card card-user">
-                    <div class="card-body">
-                        <p class="card-text">
-
-                        <h5 class="title">{{ __('Saved Articles') }}</h5>
-                        @if ($savedArticles = auth()->user()->saved_articles)
+                    <h5 class="title">{{ __('Saved Articles') }}</h5>
+                    @if ($savedArticles = auth()->user()->saved_articles)
                         <div class="card-description">
-                            {{ $savedArticles }}
+                            @foreach (auth()->user()->saved_articles as $articleTitle)
+                                <div class="article-item">
+                                    - {{ $articleTitle }} <br>
+                                </div>
+
+                            @endforeach
                         </div>
-                        @else
-                            <div class="card-description">
-                                {{ 'There is no saved articles yet' }}
-                            </div>
-                        @endif
-                    </div>
-        </div>
-    </div>
+                    @else
+                        <div class="card-description">
+                            {{ 'There is no saved articles yet' }}
+                        </div>
+                    @endif
+                </div>
+
+            </div>
 @endsection

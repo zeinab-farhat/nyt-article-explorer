@@ -93,24 +93,31 @@ class ArticleController extends Controller
         return view('pages.articles.show', ['article' => $article]);
     }
 
-    public function saveArticle($id): RedirectResponse
+    public function saveArticle(Request $request): RedirectResponse
     {
 
         $user = auth()->user();
-
+        $uri = $request->input('uri');
+        $articles = cache('nytimes_articles');
+        $article = collect($articles)->firstWhere('uri', $uri);
+        $title = $article['title'];
         // Get the saved article IDs
-        $savedArticleIds = $user->saved_articles;
+        $savedArticleTitles = $user->saved_articles;
 
         // Check if the article ID is already saved
-        if (!$savedArticleIds || !in_array($id, $savedArticleIds)) {
+        if (!$savedArticleTitles || !in_array($title, $savedArticleTitles)) {
             // Append the article ID to the saved_articles array
-            $savedArticleIds[] = $id;
+            $savedArticleTitles[] = $title;
 
             // Update the saved_articles attribute
-            $user->saved_articles = $savedArticleIds;
+            $user->saved_articles = $savedArticleTitles;
             $user->save();
+            return redirect()->back()->with('status', 'Article is saved successfully for profile');
+        }else{
+            return redirect()->back()->with('status', 'Article is already saved in your profile');
+
         }
 
-        return redirect()->back()->with('status', 'Article is saved successfully for profile');
+
     }
 }

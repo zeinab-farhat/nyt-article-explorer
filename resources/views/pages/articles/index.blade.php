@@ -66,9 +66,11 @@
                                                     <i class=" tim-icons icon-alert-circle-exc p-1"></i>
                                                 </a>
 
-                                                <form action="{{ route('save-article', ['id' => $article['id']]) }}"
+                                                <form action="{{ route('save-article') }}"
                                                       method="POST">
                                                     @csrf
+                                                    <input type="hidden" name="uri" value="{{ $article['uri'] }}">
+
                                                     <button type="submit" class="heart-button">
                                                         <i class="tim-icons icon-heart-2 p-1"></i>
                                                     </button>
