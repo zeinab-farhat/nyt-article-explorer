@@ -70,7 +70,6 @@ class ArticleController extends Controller
         $script->handle();
     }
 
-
     public function getArticleById($articleId)
     {
         $articles = Cache::get('nytimes_articles');
@@ -94,23 +93,24 @@ class ArticleController extends Controller
         return view('pages.articles.show', ['article' => $article]);
     }
 
-    public function saveArticle(Request $request, Article $article): RedirectResponse
+    public function saveArticle($id): RedirectResponse
     {
+
         $user = auth()->user();
-        $articleId = $request->id;
+
         // Get the saved article IDs
         $savedArticleIds = $user->saved_articles;
 
         // Check if the article ID is already saved
-        if (!$savedArticleIds || !in_array($articleId, $savedArticleIds)) {
+        if (!$savedArticleIds || !in_array($id, $savedArticleIds)) {
             // Append the article ID to the saved_articles array
-            $savedArticleIds[] = $articleId;
+            $savedArticleIds[] = $id;
 
             // Update the saved_articles attribute
             $user->saved_articles = $savedArticleIds;
             $user->save();
         }
 
-        return redirect()->back()->with('success', 'Article saved successfully!');
+        return redirect()->back()->with('status', 'Article is saved successfully for profile');
     }
 }

@@ -84,32 +84,22 @@
         </div>
         <div class="col-md-4">
             <!-- Saved Articles Section -->
-            @if ($savedArticles = __('Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...'))
+
                 <div class="card card-user">
                     <div class="card-body">
                         <p class="card-text">
 
                         <h5 class="title">{{ __('Saved Articles') }}</h5>
-
+                        @if ($savedArticles = auth()->user()->saved_articles)
                         <div class="card-description">
                             {{ $savedArticles }}
                         </div>
+                        @else
+                            <div class="card-description">
+                                {{ 'There is no saved articles yet' }}
+                            </div>
+                        @endif
                     </div>
-                    <div class="card-footer">
-                        <div class="button-container">
-                            <button class="btn btn-icon btn-round btn-facebook">
-                                <i class="fab fa-facebook"></i>
-                            </button>
-                            <button class="btn btn-icon btn-round btn-twitter">
-                                <i class="fab fa-twitter"></i>
-                            </button>
-                            <button class="btn btn-icon btn-round btn-google">
-                                <i class="fab fa-google-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            @endif
         </div>
     </div>
 @endsection

@@ -1,6 +1,20 @@
 @extends('layouts.app', ['page' => __('Articles'), 'pageSlug' => 'articles'])
 
 @section('content')
+    @include('alerts.success')
+
+        @if (isset($message))
+            <div id="notification" class="alert alert-success alert-dismissible fade show" role="alert" v-if="show">
+
+                {{ $message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="dismissAlert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -12,7 +26,7 @@
                                     <h4 class="card-title">Articles</h4>
                                 </div>
                                 <div class="col-6">
-                                    <form action="{{ route('pages.articles') }}" method="GET">
+                                    <form action="{{ route('articles') }}" method="GET">
                                         <div class="input-group">
                                             <div class="col">
                                                 <input type="text" name="title" class="form-control"

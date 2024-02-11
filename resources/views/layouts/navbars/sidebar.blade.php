@@ -33,7 +33,7 @@
 
 
             <li @if ($pageSlug == 'articles') class="active " @endif>
-                <a href="{{ route('pages.articles') }}">
+                <a href="{{ route('articles') }}">
                     <i class="tim-icons icon-paper"></i>
                     <p>{{ __('Articles') }}</p>
                 </a>

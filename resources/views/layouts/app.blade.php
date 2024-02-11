@@ -17,7 +17,7 @@
         <!-- Icons -->
         <link href="{{ asset('black') }}/css/nucleo-icons.css" rel="stylesheet" />
         <!-- CSS -->
-        <link href="{{ asset('black') }}/css/black-dashboard.css?v=3.0.0" rel="stylesheet" />
+        <link href="{{ asset('black') }}/css/black-dashboard.css?v=4.0.0" rel="stylesheet" />
         <link href="{{ asset('black') }}/css/theme.css?v=5.0.0" rel="stylesheet" />
     </head>
     <body class="{{ $class ?? '' }}">
@@ -64,7 +64,7 @@
         <script src="{{ asset('black') }}/js/plugins/bootstrap-notify.js"></script>
 
         <script src="{{ asset('black') }}/js/black-dashboard.min.js?v=1.0.0"></script>
-        <script src="{{ asset('black') }}/js/theme.js"></script>
+        <script src="{{ asset('black') }}/js/theme.js?v=3.0.0"></script>
 
         @stack('js')
 
