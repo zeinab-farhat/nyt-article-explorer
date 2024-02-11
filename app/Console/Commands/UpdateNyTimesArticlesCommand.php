@@ -33,16 +33,18 @@ class UpdateNyTimesArticlesCommand extends Command
     public function handle()
     {
         // Fetch data from the NY Times API
-        $response = Http::get('https://api.nytimes.com/svc/mostpopular/v2/viewed/10.json', [
+        $response = Http::get('https://api.nytimes.com/svc/mostpopular/v2/viewed/7.json', [
             'api-key' => 'e2o1Nf5YamMD78tZP8vG3TvbUKQ6jF9j',
         ]);
 
+
+            $articles = $response->json()['results'];
+
+
         // Extract articles from the response
-        $articles = $response->json()['results'];
 
         // Store data in cache
         Cache::forever('nytimes_articles', $articles);
 
-//        $this->line('NY Times articles updated successfully.');
     }
 }

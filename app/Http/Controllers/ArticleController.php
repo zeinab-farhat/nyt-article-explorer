@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 // Import the Request class
 
@@ -21,11 +22,13 @@ class ArticleController extends Controller
 
     public function index(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
     {
+
         // Define the cache key
         $cacheKey = 'nytimes_articles';
 
         // Check if the data exists in the cache
-        if (Cache::has($cacheKey)) {
+        if (Cache::has($cacheKey) && $articles= Cache::get($cacheKey) != null) {
+
             // Retrieve data from cache
             $articles = Cache::get($cacheKey);
         } else {
