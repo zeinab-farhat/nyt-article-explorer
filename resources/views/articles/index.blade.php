@@ -29,7 +29,7 @@
                                         <a href="#" class="dropdown-toggle nav-link text-right" data-toggle="dropdown">
                                             <div class="notification d-none d-lg-block d-xl-block"></div>
                                             <i class="tim-icons icon-settings-gear-63"></i>
-                                            <p class="d-lg-none"> {{ __('Notifications') }} </p>
+                                            <p class="d-lg-none"> {{ __('Filter') }} </p>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-navbar" style="background-color: #1e1e2f;
     padding: 19px;">
