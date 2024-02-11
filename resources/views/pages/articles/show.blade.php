@@ -30,6 +30,12 @@
                                 </ul>
                             </div>
 
+                            <!-- Descriptive Facets Block -->
+                            <div class="mb-4">
+                                <h5 class="font-weight-bold">Url</h5>:<p><a href="{{ $article['url'] }}">{{ $article['url'] }}</a></p>
+
+                            </div>
+
                             <!-- Organizational Facets Block -->
                             <div class="mb-4">
                                 <h5 class="font-weight-bold">Organizational Facets</h5>

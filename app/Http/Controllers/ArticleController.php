@@ -27,7 +27,7 @@ class ArticleController extends Controller
         $cacheKey = 'nytimes_articles';
 
         // Check if the data exists in the cache
-        if (Cache::has($cacheKey) && $articles= Cache::get($cacheKey) != null) {
+        if (Cache::has($cacheKey) && $articles= Cache::get('nytimes_articles') != null) {
 
             // Retrieve data from cache
             $articles = Cache::get($cacheKey);
@@ -43,13 +43,16 @@ class ArticleController extends Controller
         $url = $request->input('url');
 
         if ($title) {
+            $title = strtolower($title); // Convert search query to lowercase
             $articles = $articles->filter(function ($article) use ($title) {
-                return strpos($article['title'], $title) !== false;
+                return strpos(strtolower($article['title']), $title) !== false; // Convert article title to lowercase
             });
         }
+
         if ($url) {
+            $url = strtolower($url); // Convert search query to lowercase
             $articles = $articles->filter(function ($article) use ($url) {
-                return strpos($article['url'], $url) !== false;
+                return strpos(strtolower($article['url']), $url) !== false; // Convert article URL to lowercase
             });
         }
 

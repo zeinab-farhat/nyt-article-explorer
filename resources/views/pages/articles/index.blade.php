@@ -35,8 +35,8 @@
                                 <table class="table text-center">
                                     <thead>
                                     <th class="text-primary">Title</th>
+                                    <th class="text-primary">Abstract</th>
                                     <th class="text-primary">Section</th>
-                                    <th class="text-primary">Url</th>
                                     <th class="text-primary">Published Date</th>
                                     <th class="text-primary">Actions</th>
                                     </thead>
@@ -44,8 +44,8 @@
                                     @foreach($articles as $article)
                                         <tr>
                                             <td>{{ $article["title"] }}</td>
+                                            <td>{{ $article["abstract"] }}</td>
                                             <td>{{ $article["section"] }}</td>
-                                            <td>{{ $article["url"] }}</td>
                                             <td>{{ $article["published_date"] }}</td>
                                             <td>
                                                 <a href="{{ route('article.view', ['id' => $article["id"]]) }}">
