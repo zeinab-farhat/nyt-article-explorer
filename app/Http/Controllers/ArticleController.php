@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Console\Commands\UpdateNyTimesArticlesCommand;
 use App\Models\Article;
-use App\Models\UserArticle;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -13,21 +11,18 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Http;
 
-// Import the Request class
 
 class ArticleController extends Controller
 {
 
     public function index(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
     {
-
         // Define the cache key
         $cacheKey = 'nytimes_articles';
 
         // Check if the data exists in the cache
-        if (Cache::has($cacheKey) && $articles= Cache::get('nytimes_articles') != null) {
+        if (Cache::has($cacheKey) && $articles = Cache::get('nytimes_articles') != null) {
 
             // Retrieve data from cache
             $articles = Cache::get($cacheKey);
