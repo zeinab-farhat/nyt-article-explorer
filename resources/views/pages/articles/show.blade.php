@@ -1,77 +1,97 @@
-@extends('layouts.app', ['activePage' => 'article-management','pageSlug' => 'articles', 'titlePage' => __('Article Management')])
+@extends('layouts.app', ['activePage' => 'article-management', 'pageSlug' => 'articles', 'titlePage' => __('Article Management')])
 
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div>
-                    <div class="card">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card article-card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">{{ $article['title'] }}</h4>
-                            <p class="card-category">Published Date: {{ $article['published_date'] }}</p>
+                            @if (!empty($article['published_date']))
+                                <p class="card-category">Published Date: {{ $article['published_date'] }}</p>
+                            @endif
                         </div>
                         <div class="card-body">
-                            <!-- General Information Block -->
-                            <div class="mb-4">
-                                <h5 class="font-weight-bold">General Information</h5>
-                                <p><span class="font-weight-bold">Section:</span> {{ $article['section'] }}</p>
-                                <p><span class="font-weight-bold">Subsection:</span> {{ $article['subsection'] }}</p>
-                                <p><span class="font-weight-bold">Byline:</span> {{ $article['byline'] }}</p>
-                                <p><span class="font-weight-bold">Abstract:</span> {{ $article['abstract'] }}</p>
+                            <div class="article-section">
+                                <h5 class="article-section-title">General Information</h5>
+                                @if (!empty($article['section']))
+                                    <p class="article-info"><span
+                                            class="info-label">Section:</span> {{ $article['section'] }}</p>
+                                @endif
+
+                                @if (!empty($article['subsection']))
+                                    <p class="article-info"><span
+                                            class="info-label">Subsection:</span> {{ $article['subsection'] }}</p>
+                                @endif
+
+                                @if (!empty($article['byline']))
+                                    <p class="article-info"><span
+                                            class="info-label">Byline:</span> {{ $article['byline'] }}</p>
+                                @endif
+
+                                @if (!empty($article['abstract']))
+                                    <p class="article-info"><span
+                                            class="info-label">Abstract:</span> {{ $article['abstract'] }}</p>
+                                @endif
                             </div>
 
-                            <!-- Descriptive Facets Block -->
-                            <div class="mb-4">
-                                <h5 class="font-weight-bold">Descriptive Facets</h5>
-                                <ul class="list-unstyled">
-                                    @foreach ($article['des_facet'] as $facet)
-                                        <li>{{ $facet }}</li>
+                            <p class="article-info"><span
+                                    class="info-label">Url:</span> <a
+                                    href="{{ $article['url'] }}">{{ $article['url'] }}</a></p><br>
+
+                            @if (!empty($article['org_facet']))
+                                <div class="article-section">
+                                    <h5 class="article-section-title">Organizational Facets</h5>
+                                    <ul class="article-list">
+                                        @foreach ($article['org_facet'] as $facet)
+                                            <p class="article-info">{{ $facet }}</p>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            @if (!empty($article['per_facet']))
+                                <div class="article-section">
+                                    <h5 class="article-section-title">Personal Facets</h5>
+                                    <ul class="article-list">
+                                        @foreach ($article['per_facet'] as $facet)
+                                            <p class="article-info">{{ $facet }}</p>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            @if (!empty($article['geo_facet']))
+
+                                <div class="article-section">
+                                    <h5 class="article-section-title">Geographical Facets</h5>
+                                    <ul class="article-list">
+                                        @foreach ($article['geo_facet'] as $facet)
+                                            <p class="article-info">{{ $facet }}</p>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <div class="article-section">
+                                <h5 class="article-section-title">Media</h5>
+                                <div class="row">
+                                    @foreach ($article['media'] as $media)
+                                        <div class="col-md-4">
+                                            <!-- HTML -->
+                                            <div class="media-card">
+                                                <img src="{{ $media['media-metadata'][0]['url'] }}"
+                                                     alt="{{ $media['caption'] }}" class="card-img-top">
+                                                @if (!empty($media['caption']))
+                                                    <div class="card-body">
+                                                        <p class="card-text">{{ $media['caption'] }}</p>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
                                     @endforeach
-                                </ul>
-                            </div>
-
-                            <!-- Descriptive Facets Block -->
-                            <div class="mb-4">
-                                <h5 class="font-weight-bold">Url</h5>:<p><a href="{{ $article['url'] }}">{{ $article['url'] }}</a></p>
-
-                            </div>
-
-                            <!-- Organizational Facets Block -->
-                            <div class="mb-4">
-                                <h5 class="font-weight-bold">Organizational Facets</h5>
-                                <ul class="list-unstyled">
-                                    @foreach ($article['org_facet'] as $facet)
-                                        <li>{{ $facet }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-
-                            <!-- Personal Facets Block -->
-                            <div class="mb-4">
-                                <h5 class="font-weight-bold">Personal Facets</h5>
-                                <ul class="list-unstyled">
-                                    @foreach ($article['per_facet'] as $facet)
-                                        <li>{{ $facet }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-
-                            <!-- Geographical Facets Block -->
-                            <div class="mb-4">
-                                <h5 class="font-weight-bold">Geographical Facets</h5>
-                                <ul class="list-unstyled">
-                                    @foreach ($article['geo_facet'] as $facet)
-                                        <li>{{ $facet }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-
-                            <!-- Media Block -->
-                            <div>
-                                <h5 class="font-weight-bold">Media</h5>
-                                @foreach ($article['media'] as $media)
-                                    <img src="{{ $media['media-metadata'][0]['url'] }}" alt="{{ $media['caption'] }}" class="img-fluid mb-2">
-                                @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -80,4 +100,3 @@
         </div>
     </div>
 @endsection
-

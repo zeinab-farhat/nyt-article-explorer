@@ -135,3 +135,46 @@
 .heart-button i{
     color: #ba54f5;
 }
+
+.article-card {
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.article-section {
+    margin-bottom: 20px;
+}
+
+.article-section-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.info-label {
+    font-weight: bold;
+}
+
+.article-info {
+    margin-bottom: 5px;
+}
+
+.article-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.media-card {
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.media-card img {
+    width: 100%; /* Ensure the image fills its container */
+    height: auto; /* Maintain aspect ratio */
+}
+@media (max-width: 767px) {
+    .media-card {
+        margin-bottom: 20px;
+    }
+}
+
